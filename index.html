@@ -58,15 +58,20 @@
         background: #005bb5; /* Более тёмный синий при наведении */
     }
 
-        .category-button.reset {
-            background: #f44336; /* Красный цвет */
-            color: white;
-            margin-top: 20px; /* Отступ сверху */
-    }
+    .category-button.reset {
+    background: #f44336; /* Красный цвет */
+    color: white;
+    margin-top: 10px; /* Отступ сверху */
+    padding: 10px; /* Внутренние отступы */
+    width: 100%; /* Кнопка занимает всю ширину контейнера */
+    box-sizing: border-box; /* Учитываем отступы и границы */
+    text-align: center; /* Центрирование текста */
+    font-size: 16px; /* Размер текста */
+}
 
-        .category-button.reset:hover {
-            background: #d32f2f;
-    }
+.category-button.reset:hover {
+    background: #d32f2f; /* Более тёмный красный при наведении */
+}
 
         .category-button {
             display: block;
@@ -87,8 +92,8 @@
             margin: 10px 0;
         }
         .item span {
-            font-size: 20px; /* Увеличиваем размер текста */
-        
+            font-size: 14px; /* Увеличиваем размер текста */
+            font-weight: bold;
             color: #333; /* Цвет текста (опционально) */
 }
         .item button {
@@ -172,13 +177,19 @@
         <h1>Управление заказами</h1>
     </header>
     <div id="menu">
-        <button class="category-button" onclick="showCategory('Вино')">Вино</button>
-        <button class="category-button" onclick="showCategory('Виски')">Виски</button>
-        <button class="category-button" onclick="showCategory('Ром')">Ром</button>
-        <button class="category-button" onclick="showCategory('Пиво')">Пиво</button>
-        <button class="category-button" onclick="showCategory('Софты')">Софты</button>
+        <button class="category-button" onclick="showCategory('Вино')">Вино 🍷</button>
+        <button class="category-button" onclick="showCategory('Софты')">Софты🧃</button>
+        <button class="category-button" onclick="showCategory('Коньяк')">Коньяк</button>
+        <button class="category-button" onclick="showCategory('Игристое')">Игристое 🍾</button>
         <button class="category-button" onclick="showCategory('Водка')">Водка</button>
+        <button class="category-button" onclick="showCategory('Ром')">Ром</button>
+         <button class="category-button" onclick="showCategory('Виски')">Виски 🥃</button>
+        <button class="category-button" onclick="showCategory('Текила')">Текила</button> 
+        <button class="category-button" onclick="showCategory('Джин')">Джин</button>
+        <button class="category-button" onclick="showCategory('Пиво')">Пиво 🍻</button>
+        <button class="category-button" onclick="showCategory('Херес и Порто')">Херес и Порто</button>
         <button class="category-button" onclick="showCategory('Саша Закуп')">Саша Закуп</button>
+
     </div>
     <div id="content">
         <h2>Добро пожаловать</h2>
@@ -187,60 +198,104 @@
 
     <script>
         const categories = {
-            "Игристое/Шампанское": {
+
+        "Игристое": {
+        
+            "Montelvini Extra Dry": "GWS",
+            "Montelvini Asolo": "GWS",
+            "Marlborough Sun Bubbles": "Крафт 2",
+            "Villa Sandi": "Крафт 2",
+            "Allimant-Laugner Crémant": "GWS",
+            "Valdo Valdobbiadene": "GWS",
             "GOSSET Brut": "GWS",
             "GOSSET Blanc de Blanc": "GWS",
-            "Allimant-Laugner Crémant": "GWS",
-            "Montelvini Asolo": "GWS",
-            "Montelvini Extra Dry": "GWS",
-            "Valdo Valdobbiadene": "GWS",
-            "Moёt Chandon Brut 0.75": "KWS"
+            "Ruinart Blanc de Blancs": "KWS",
+            "Moёt Chandon Brut 0.75": "KWS",
+            "Moёt Chandon Brut 0.2": "KWS",
+            "Laurent Perrier Blanc de Blanc": "North Trade",
+            "Laurent Perrier Rose": "North Trade",
+
         },
         "Вино": {
+           
             "Zenato Pinot Grigio": "GWS",
-            "Zenato Chiaretto": "GWS",
             "Zenato Bardolino": "GWS",
+            "Zenato Chiaretto": "GWS",
             "Haulashore Sauvignon Blanc": "GWS",
-            "770 mile chardonnay": "GWS",
             "770 mile Zinfandel": "GWS",
-            "Domaine de Vauroux Chablis 1er Cru Montmains": "GWS",
+            "Speri Valpolicella": "Крафт 2",
+            "1924 Chardonnay": "GWS",
+            "Ak Arba Kazakh Riesling": "Arba Wine",
+            "Ak Arba Riesling 0.3": "Arba Wine",
+            "Ak Arba Riesling Reserve": "Arba Wine",
             "Allimant-Laugner Gewürztraminer": "GWS",
-            "Le Merle Blanc de Chateau Clarke": "GWS",
-            "Laporte Sancerre Le Rochoy": "GWS",
-            "Furlet Bianco ": "GWS",
-            "Terre NatuzziI Chianti": "GWS",
-            "Zenato LUGANA DOC San Benedetto": "GWS",
-            "Zenato VALPOLICELLA RIPASSO DOC SUPERIORE": "GWS",
-            "Zenato AMARONE DELLA VALPOLICELLA CLASSICO": "GWS",
-            "Zenato SERGIO LUGANA DOC RISERVA": "GWS",
-            "Chateau Troupian Haut - Medoc": "GWS",
-            "Chateau Lanessan Haut-Medoc AOС": "GWS",
-            "Blason d'Issan, Margaux AOC": "GWS",
-            "Chateau Giscours Margaux AOC": "GWS",
-            "Furlet Pinot Nero": "GWS",
-            "Mauro Molino Barolo": "GWS",
-            "Cune Rioja Gran Reserva": "GWS",
-            "Valduero Blanco": "GWS",
-            "Muller Zweigelt Göttweiger Berg": "GWS",
-            "Valduero Una Cepa 2016": "GWS",
-            "Muller Reisling Göttweiger Berg": "GWS",
-            "Black Stallion Chardonnay": "GWS",
-            "Black Stallion Cabernet Sauvignon": "GWS",
-            "Fritz Walter Spatburgunder (Pinot Noir)": "GWS",
-            "Fritz Walter Riesling": "GWS",
-            "1924 Scotch Barrel aged Chardonnay": "GWS",
-            "Coto de Imaz Rioja": "GWS",
-            "CORRALILLO WINEMAKERS BLEND": "GWS",
-            "EQ SAUVIGNON BLANC": "GWS",
-            "EQ PINOT NOIR": "GWS",
-            "EQ CHARDONNAY": "GWS",
-            "Old Coach Road Pinot Noir": "GWS",
+            "Attems Pinot Grigio": "KWS",
+            "Banfi Principessa Gavia Gavi": "North Trade",
             "BARISTA PINOTAGE": "GWS",
-            "THE CHOCOLATE BLOCK": "GWS",
-            "REYNEKE ORGANIC SYRAH": "GWS",
+            "Belvento Vermentino": "KWS",
+            "Black Stallion Cabernet Sauvignon": "GWS",
+            "Black Stallion Chardonnay": "GWS",
+            "Blason d'Issan, Margaux AOC": "GWS",
+            "Chablis Domaine Long-Depaquit": "North Trade",
+            "Chablis Premier Cru 'Fourchaume'": "North Trade",
+            "Chateau Giscours Margaux AOC": "GWS",
+            "Chateau Lanessan Haut-Medoc AOС": "GWS",
+            "Chateau Troupian Haut - Medoc": "GWS",
+            "CORRALILLO WINEMAKERS BLEND": "GWS",
+            "Cote-Rotie 'Brune et Blonde'": "KWS",
+            "Coto de Imaz Rioja": "GWS",
+            "Cune Rioja Gran Reserva": "GWS",
+            "Chablis 1er Cru Montmains": "GWS",
+            "EQ CHARDONNAY": "GWS",
+            "EQ PINOT NOIR": "GWS",
+            "EQ SAUVIGNON BLANC": "GWS",
+            "Errazuriz Chardonnay": "KWS",
+            "Errazuriz Sauvignon Blanc": "KWS",
+            "Fritz Walter Riesling": "GWS",
+            "Fritz Walter Spatburgunder (Pinot Noir)": "GWS",
+            "Furlet Bianco": "GWS",
+            "Furlet Pinot Nero": "GWS",
+            "Gaja 'Gaia & Rey' Langhe": "KWS",
+            "Gaja 'Rossj - Bass' Langhe": "KWS",
+            "Gotas de Mar Albarino": "Крафт 2",
+            "Gotas de Mar Godello": "Крафт 2",
+            "Kyzyl Arba Cabernet Franc": "Arba Wine",
+            "Kyzyl Arba Cabernet Franc 0.3": "Arba Wine",
+            "La Scolca Gavi dei Gavi": "Крафт 2",
+            "Lagyl Arba Saperavi Reserve": "Arba Wine",
+            "Laporte Sancerre Le Rochoy": "GWS",
+            "Le Merle Blanc de Chateau Clarke": "GWS",
+            "Le Volte dell’Ornellaia": "KWS",
+            "Livio Felluga Pinot Grigio": "Крафт 2",
+            "LVNAE Vermentino 'Etichetta Nera'": "North Trade",
+            "Marlborough Sun Pinot Noir": "Крафт 2",
+            "Marlborough Sun Rose": "Крафт 2",
+            "Marlborough Sun Sauvignon": "Крафт 2",
+            "Mauro Molino Barolo": "GWS",
+            "Meursault ": "North Trade",
+            "Muller Reisling Göttweiger Berg": "GWS",
+            "Muller Zweigelt Göttweiger Berg": "GWS",
+            "Natureo Muscat 0%": "KWS",
+            "Natureo Syrah 0%": "KWS",
+            "Nuala Pinot Noir": "KWS",
+            "Nuala Sauvignon Blanc": "KWS",
+            "Old Coach Road Pinot Noir": "GWS",
+            "Pino Arba Pinot Noir 0.3": "Arba Wine",
+            "Pino Arba Pinot Noir Reserve": "Arba Wine",
+            "Pino Sape": "Arba Wine",
             "REYNEKE ORGANIC CHENIN BLANC": "GWS",
-            "Taylor’s Vintage Port": "GWS",
-            "Taylor’s Tawny 20": "GWS"
+            "REYNEKE ORGANIC SYRAH": "GWS",
+            "Sassicaia Bolgheri DOC": "Крафт 2",
+            "Talo Primitivo-Merlot": "KWS",
+            "Terre NatuzziI Chianti": "GWS",
+            "THE CHOCOLATE BLOCK": "GWS",
+            "Tommasi Le Rosse Pinot Grigio": "North Trade",
+            "Valduero Blanco": "GWS",
+            "Valduero Una Cepa 2016": "GWS",
+            "Zenato AMARONE DELLA VALPOLICELLA CLASSICO": "GWS",
+            "Zenato LUGANA DOC San Benedetto": "GWS",
+            "Zenato SERGIO LUGANA DOC RISERVA": "GWS",
+            "Zenato VALPOLICELLA RIPASSO DOC SUPERIORE": "GWS"
         },
         "Виски": {
             "The Macallan 12 у.о": "GWS",
@@ -270,7 +325,9 @@
         "Коньяк": {
             "Hennessy VS 0.5": "KWS",
             "Hennessy VSOP 0.7": "KWS",
-            "Hennessy XO 0.7": "KWS"
+            "Hennessy XO 0.7": "KWS",
+            "Martell XO 0.7 ": "",
+            "Deau Cognac VS 0.7": "",
         },
         "Текила": {
             "Patton Silver": "Респект",
@@ -294,6 +351,15 @@
             "Swell томат": "Крафт 2",
             "Swell вишня": "Крафт 2"
         },
+
+        "Джин": {
+            "Tanqueray 1л": "North Trade",
+            "Roku Gin": "North Trade",
+            "Bombay Sapphire ": "",
+            "Bulldog dry Gin ": "",
+            "The Botanist": "North Trade"
+        },
+
         "Ром": {
             "Brugal 1888": "GWS",
             "Bacardi reserva 8 y.o": "Респект",
@@ -316,10 +382,20 @@
                 "Клюква с/м": "Саша Закуп",
                 "Вишня с/м": "Саша Закуп",
                 "Облепиха с/м": "Саша Закуп"
+            },
+
+         "Херес и Порто": {
+            "Taylor’s Vintage Port": "GWS",
+            "Taylor’s Tawny 20": "GWS",
+            "Gonzalez Byass Nectar": "Monte Bianco",
+            "Gonzalez Byass Alfonso": "Monte Bianco",
+            "Gonzalez Byass Leonor": "Monte Bianco",
+            "Gonzalez Byass Noe": "Monte Bianco"
+
             }
         };
     
-            const supplierPhones = {
+        const supplierPhones = {
         "GWS": "+77014304714",
         "Astalco": "+77066596713",
         "СатурнДистриб": "+77015938616",
@@ -327,6 +403,7 @@
         "Ред машин": "+77014291311",
         "KWS": "+77780512704",
         "Респект": "+77072535639",
+        "Monte Bianco": "+77076020224",
         "North Trade": "+77717569321",
         "Саша Закуп": "+77017743245"
     };
@@ -356,8 +433,18 @@ function showCategory(category) {
 }
 
 function changeQty(item, delta) {
+    // Проверяем, есть ли у товара поставщик
+    const supplier = Object.entries(categories).find(([_, items]) => items[item])?.[1][item];
+    if (!supplier) {
+        alert(`У товара "${item}" не указан поставщик.`);
+        return;
+    }
+
+    // Изменяем количество товара
     selectedItems[item] = (selectedItems[item] || 0) + delta;
     if (selectedItems[item] < 0) selectedItems[item] = 0;
+
+    // Обновляем отображение количества
     document.getElementById(`${item}-qty`).innerText = selectedItems[item];
 
     // Обновляем отображение кнопки "Сбросить"
