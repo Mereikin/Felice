@@ -86,27 +86,51 @@
         .category-button:hover {
             background: #45a049;
         }
+        
         .item {
-            display: flex;
-            justify-content: space-between;
-            margin: 10px 0;
-        }
-        .item span {
-            font-size: 14px; /* Увеличиваем размер текста */
-            font-weight: bold;
-            color: #333; /* Цвет текста (опционально) */
+    display: flex; /* Устанавливаем flex-контейнер */
+    justify-content: space-between; /* Разделяем название и кнопки */
+    align-items: center; /* Выравниваем элементы по вертикали */
+    margin: 10px 0;
 }
-        .item button {
-            margin: 0 5px;
-            padding: 5px 10px;
-            background: #0078d7;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        .item button:hover {
-            background: #005bb5;
-        }
+
+.item-details {
+    flex: 1; /* Название товара занимает всё доступное пространство */
+    text-align: left; /* Выровнять текст по левому краю */
+}
+
+.item-controls {
+    display: flex; /* Устанавливаем flex-контейнер для кнопок и количества */
+    align-items: center; /* Выравниваем кнопки и количество по вертикали */
+    gap: 5px; /* Отступ между кнопками и количеством */
+}
+
+.item-controls button {
+    padding: 5px 10px;
+    background: #0078d7;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.item-controls button:hover {
+    background: #005bb5;
+}
+
+/* Для мобильной версии */
+@media (max-width: 480px) {
+    .item {
+        flex-wrap: nowrap; /* Запрещаем перенос элементов на новую строку */
+    }
+
+    .item-details {
+        font-size: 14px; /* Уменьшаем размер текста для мобильных устройств */
+    }
+
+    .item-controls button {
+        padding: 5px 8px; /* Уменьшаем размер кнопок */
+    }
+}
         .summary {
             margin-top: 20px;
         }
@@ -142,13 +166,7 @@
                 width: 45%; /* Кнопки занимают половину ширины */
                 margin: 5px 2%;
             }
-            .item {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .item div {
-                margin-top: 5px;
-            }
+           
             .summary button {
                 width: 100%; /* Кнопка занимает всю ширину */
             }
@@ -410,14 +428,16 @@
 
     const selectedItems = {};
 
-function showCategory(category) {
+    function showCategory(category) {
     const content = document.getElementById('content');
     content.innerHTML = `<h2>${category}</h2>`;
     Object.keys(categories[category]).forEach(item => {
         content.innerHTML += `
             <div class="item">
-                <span>${item}</span>
-                <div>
+                <div class="item-details">
+                    <span class="item-name">${item}</span>
+                </div>
+                <div class="item-controls">
                     <button onclick="changeQty('${item}', -1)">-</button>
                     <span id="${item}-qty">${selectedItems[item] || 0}</span>
                     <button onclick="changeQty('${item}', 1)">+</button>
