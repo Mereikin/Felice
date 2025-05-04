@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Управление заказами</title>
-
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icon-192x192.png" type="image/png">
     <style>
         * {
             box-sizing: border-box;
@@ -14,6 +15,8 @@
             margin: 0;
             padding: 0;
             background-image: url('logo.png'); /* Укажите путь к вашему изображению */
+            background-color: rgba(255, 255, 255, 0.5); /* Белый цвет с прозрачностью */
+            background-blend-mode: lighten; /* Смешивание изображения с цветом */
             background-position: center 51vh; /* Центрирование по горизонтали и смещение вниз на 50px */
             background-repeat: no-repeat; /* Изображение не будет повторяться */
             height: 100vh; /* Высота экрана */
@@ -28,26 +31,91 @@
             width: 100%; /* Устанавливаем ширину на 100% */
             box-sizing: border-box; /* Учитываем отступы и границы в ширине */
         }
-        #menu {
-            width: 200px;
-            background: #ddd;
-            padding: 10px;
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            overflow-y: auto;
+
+        header h1 {
+    font-size: 24px; /* Уменьшите размер текста */
+}
+        header i {
+            margin-right: 10px; /* Отступ между иконкой и текстом */
         }
-        #content {
-            margin-left: 220px;
-            padding: 20px;
+        #menu {
+    width: 200px;
+    background: #ddd;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    overflow-y: auto;
+}
+#content {
+    flex: 1; /* Контент занимает всё доступное пространство */
+    padding: 20px;
+    box-sizing: border-box; /* Учитываем отступы и границы */
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background: #f4f4f4;
+    border-top: 1px solid #ccc;
+    height: 60px; /* Высота футера */
+}
+ 
+
+        .search-wrapper {
+    position: relative; /* Для позиционирования кнопки внутри поля */
+    width: 100%;
+}
+
+        #search-container {
+    margin-top: 0; /* Отступ сверху */
+    padding: 10px;
+    background: #f4f4f4; /* Светлый фон */
+    border-top: 1px solid #ccc; /* Разделительная линия */
+}
+
+#search-input {
+    width: 100%;
+    padding: 10px 40px 10px 10px; /* Добавляем отступ справа для кнопки */
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+        #search-input:focus {
+            border-color: #2E7D32; /* Меняем цвет границы при фокусе */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Увеличиваем тень при фокусе */
         }
 
+        #search-input::placeholder {
+            color: #A5D6A7; /* Светло-зеленый текст для плейсхолдера */
+            font-style: italic; /* Курсив для текста плейсхолдера */
+        }
+
+        #clear-search {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: #888;
+    display: none; /* Скрываем кнопку по умолчанию */
+}
+
+#clear-search:hover {
+    color: #333; /* Более тёмный цвет при наведении */
+}
+
         .send-order-button {
-        background: #0078d7; /* Синий цвет */
+        background: #4CAF50; /* Синий цвет */
         color: white;
         padding: 10px 20px;
         border: none;
-        border-radius: 5px; /* Закругленные углы */
+        border-radius: 15px; /* Закругленные углы */
         cursor: pointer;
         font-size: 16px;
         margin-top: 10px; /* Отступ сверху */
@@ -82,6 +150,7 @@
             text-align: center;
             border: none;
             cursor: pointer;
+            border-radius: 10px
         }
         .category-button:hover {
             background: #45a049;
@@ -106,15 +175,19 @@
 }
 
 .item-controls button {
-    padding: 5px 10px;
-    background: #0078d7;
-    color: white;
-    border: none;
-    cursor: pointer;
+    padding: 10px 20px; /* Увеличиваем внутренние отступы */
+    font-size: 18px; /* Увеличиваем размер текста */
+    background: #0078d7; /* Цвет кнопки */
+    color: white; /* Цвет текста */
+    border: none; /* Убираем границу */
+    border-radius: 5px; /* Добавляем закруглённые углы */
+    cursor: pointer; /* Указатель мыши при наведении */
+    transition: background 0.3s ease; /* Плавный переход цвета */
+    min-width: 50px; /* Устанавливаем минимальную ширину кнопки */
 }
 
 .item-controls button:hover {
-    background: #005bb5;
+    background: #005bb5; /* Более тёмный цвет при наведении */
 }
 
 /* Для мобильной версии */
@@ -131,6 +204,12 @@
         padding: 5px 8px; /* Уменьшаем размер кнопок */
     }
 }
+
+        .item-name {
+            font-size: 14px; /* Увеличиваем размер текста */
+            font-weight: bold; /* Делаем текст жирным */
+            color: #333; /* Цвет текста */
+        }
         .summary {
             margin-top: 20px;
         }
@@ -140,11 +219,13 @@
             padding: 10px;
             border: none;
             cursor: pointer;
+            border-radius: 15px; /* Закругленные углы */
+            margin-bottom: 25px;
         }
 
         .summary-item {
             font-size: 18px; /* Увеличиваем размер текста */
-            font-weight: bold; /* Делаем текст жирным */
+
             color: #333; /* Цвет текста */
             margin-bottom: 5px; /* Отступ между элементами */
 }
@@ -186,13 +267,19 @@
 
     
 }
+
+
+
     </style>
 
 </head>
 <body>
+    
+    
+    
     <div id="background"></div> <!-- Контейнер для фона -->
     <header>
-        <h1>Управление заказами</h1>
+        <h1 onclick="resetSelection()" style="cursor: pointer; user-select: none;"><i class="fas fa-shopping-cart"></i> Управление заказами</h1>
     </header>
     <div id="menu">
         <button class="category-button" onclick="showCategory('Вино')">Вино 🍷</button>
@@ -208,11 +295,27 @@
         <button class="category-button" onclick="showCategory('Херес и Порто')">Херес и Порто</button>
         <button class="category-button" onclick="showCategory('Саша Закуп')">Саша Закуп</button>
 
+
     </div>
+    <div id="search-container">
+        <div class="search-wrapper">
+            <input
+                type="text"
+                id="search-input"
+                placeholder="Поиск товаров..."
+                oninput="searchItems()"
+            />
+            <button id="clear-search" onclick="clearSearch()">✖</button>
+        </div>
+    </div>
+
     <div id="content">
         <h2>Добро пожаловать</h2>
-        <p>Выберите категорию, чтобы начать добавлять товары в заказ.</p>
-    </div>
+        <p>Выберите категорию, чтобы начать добавлять товары в заказ. </p>
+    
+        
+        </div>
+ 
 
     <script>
         const categories = {
@@ -394,7 +497,7 @@
                 "Кокос молоко": "Саша Закуп",
                 "Миндаль молоко": "Саша Закуп",
                 "Мёд": "Саша Закуп",
-                "Сахар мешок": "Саша Закуп",
+                "Сахар песок": "Саша Закуп",
                 "Сахар рафинад": "Саша Закуп",
                 "Тростник рафинад": "Саша Закуп",
                 "Клюква с/м": "Саша Закуп",
@@ -460,8 +563,11 @@ function changeQty(item, delta) {
         return;
     }
 
+    // Если товар — "Сахар песок", изменяем количество на 5
+    const step = item === "Сахар песок" ? 5 : 1;
+
     // Изменяем количество товара
-    selectedItems[item] = (selectedItems[item] || 0) + delta;
+    selectedItems[item] = (selectedItems[item] || 0) + delta * step;
     if (selectedItems[item] < 0) selectedItems[item] = 0;
 
     // Обновляем отображение количества
@@ -499,14 +605,24 @@ function showSummary() {
         items.forEach(({ item, qty }) => {
             content.innerHTML += `<li class="summary-item">${item}: ${qty}</li>`;
         });
-        content.innerHTML += `</ul><button class="send-order-button" onclick="sendOrder('${supplier}')">Отправить заявку 📦 ${supplier}</button>`;
+        content.innerHTML += `</ul><button class="send-order-button" onclick="sendOrder('${supplier}')">📦 Отправить заявку ${supplier}</button>`;
     }
 }
 
 function sendOrder(supplier) {
     const items = Object.entries(selectedItems)
         .filter(([item, qty]) => qty > 0 && Object.values(categories).find(cat => cat[item])[item] === supplier)
-        .map(([item, qty]) => `${item}: ${qty}`)
+        .map(([item, qty]) => {
+            // Проверяем, нужно ли добавлять "кг" или "кейс" к количеству
+            const itemsWithKg = ["Клюква с/м", "Вишня с/м", "Облепиха с/м", "Сахар песок"];
+            const isSoft = categories["Софты"] && categories["Софты"][item];
+            const quantityText = itemsWithKg.includes(item)
+                ? `${qty}кг` // Добавляем "кг" для указанных товаров
+                : isSoft
+                ? `${qty}кейс` // Добавляем "кейс" для товаров из категории "Софты"
+                : `${qty}`; // Оставляем только количество для остальных товаров
+            return `${item}: ${quantityText}`;
+        })
         .join("\n");
 
     if (!items) {
@@ -516,7 +632,6 @@ function sendOrder(supplier) {
 
     const message = `Здравствуйте, заявка:\n\n${items}`;
     const phone = supplierPhones[supplier];
-    
 
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
@@ -541,6 +656,59 @@ function resetSelection() {
     updateResetButton();
 }
 
+function searchItems() {
+    const query = document.getElementById('search-input').value.toLowerCase();
+    const clearButton = document.getElementById('clear-search');
+    const content = document.getElementById('content');
+
+    // Показываем или скрываем кнопку очистки
+    if (query) {
+        clearButton.style.display = 'block';
+    } else {
+        clearButton.style.display = 'none';
+    }
+
+    content.innerHTML = '';
+
+    let foundItems = false;
+
+    Object.keys(categories).forEach(category => {
+        const filteredItems = Object.keys(categories[category]).filter(item =>
+            item.toLowerCase().includes(query)
+        );
+
+        if (filteredItems.length > 0) {
+            foundItems = true;
+            content.innerHTML += `<h2>${category}</h2>`;
+            filteredItems.forEach(item => {
+                content.innerHTML += `
+                    <div class="item">
+                        <div class="item-details">
+                            <span class="item-name">${item}</span>
+                        </div>
+                        <div class="item-controls">
+                            <button onclick="changeQty('${item}', -1)">-</button>
+                            <span id="${item}-qty">${selectedItems[item] || 0}</span>
+                            <button onclick="changeQty('${item}', 1)">+</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+    });
+
+    if (!foundItems) {
+        content.innerHTML = '<p>Ничего не найдено.</p>';
+    } else {
+        // Добавляем кнопку "Посмотреть сводку", если найдены товары
+        content.innerHTML += `
+            <div class="summary">
+                <button onclick="showSummary()">Посмотреть сводку</button>
+            </div>
+        `;
+    }
+}
+
 function updateResetButton() {
     const menu = document.getElementById('menu');
     const hasSelectedItems = Object.values(selectedItems).some(qty => qty > 0);
@@ -562,6 +730,57 @@ function updateResetButton() {
     }
 }
 
+function clearSearch() {
+    const searchInput = document.getElementById('search-input');
+    const clearButton = document.getElementById('clear-search');
+
+    searchInput.value = ''; // Очищаем поле ввода
+    clearButton.style.display = 'none'; // Скрываем кнопку очистки
+    searchItems(); // Обновляем результаты поиска
+    updateResetButton(); // Обновляем отображение кнопки "Сбросить"
+}
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("./service-worker.js")
+      .then(registration => {
+        console.log("Service Worker зарегистрирован:", registration);
+      })
+      .catch(error => {
+        console.log("Ошибка регистрации Service Worker:", error);
+      });
+  });
+}
+
+let deferredPrompt;
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+
+  const installButton = document.getElementById("install-button");
+  installButton.style.display = "block";
+
+  installButton.addEventListener("click", () => {
+    installButton.style.display = "none";
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === "accepted") {
+        console.log("Приложение установлено");
+      } else {
+        console.log("Установка приложения отменена");
+      }
+      deferredPrompt = null;
+    });
+  });
+});
+
+<button id="install-button" style="display: none;">Установить приложение</button>
+
 </script>
+
+
 </body>
+
 </html>
