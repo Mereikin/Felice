@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Управление заказами</title>
-    <link rel="manifest" href="manifest.json">
     <link rel="icon" href="icon-192x192.png" type="image/png">
     <style>
         * {
@@ -753,30 +752,6 @@ if ("serviceWorker" in navigator) {
   });
 }
 
-let deferredPrompt;
-
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-
-  const installButton = document.getElementById("install-button");
-  installButton.style.display = "block";
-
-  installButton.addEventListener("click", () => {
-    installButton.style.display = "none";
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((choiceResult) => {
-      if (choiceResult.outcome === "accepted") {
-        console.log("Приложение установлено");
-      } else {
-        console.log("Установка приложения отменена");
-      }
-      deferredPrompt = null;
-    });
-  });
-});
-
-<button id="install-button" style="display: none;">Установить приложение</button>
 
 </script>
 
