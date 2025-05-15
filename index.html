@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru"></html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление заказами</title>
+    <link rel="icon" href="icon-192x192.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="css/prices.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/debts.css">
+
+    <script src="scripts/main.js"></script>
+    <script src="scripts/sidebar.js"></script>
+    <script src="scripts/price.js"></script>
+    <script src="scripts/debts.js"></script>
+    <script src="scripts/supplierlist.js"></script>
+    <script type="module" src="scripts/debts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <style>
+
+    </style>
+</head>
+<body>
+
+    <div id="background"></div> 
+    <header>
+        <h1 onclick="resetSelection()" style="cursor: pointer; user-select: none;"></i> Управление заказами</h1>
+    </header>
+    
+    <div id="menu">
+        <button class="category-button" onclick="showCategory('Вино')">Вино 🍷</button>
+        <button class="category-button" onclick="showCategory('Прочее')">Прочее</button>
+        <button class="category-button" onclick="showCategory('Коньяк')">Коньяк</button>
+        <button class="category-button" onclick="showCategory('Игристое')">Игристое 🍾</button>
+        <button class="category-button" onclick="showCategory('Водка')">Водка</button>
+        <button class="category-button" onclick="showCategory('Ром')">Ром</button>
+        <button class="category-button" onclick="showCategory('Виски')">Виски 🥃</button>
+        <button class="category-button" onclick="showCategory('Текила')">Текила</button> 
+        <button class="category-button" onclick="showCategory('Джин')">Джин</button>
+        <button class="category-button" onclick="showCategory('Пиво')">Пиво 🍻</button>
+        <button class="category-button" onclick="showCategory('Херес и Порто')">Херес и Порто</button>
+        <button class="category-button" onclick="showCategory('Саша Закуп')">Саша Закуп</button>
+        <button class="category-button" onclick="showCategory('Софты')">Софты🧃</button>
+        
+    </div>
+
+    <div id="search-container">
+        <div class="search-wrapper">
+            <input
+                type="text"
+                id="search-input"
+                placeholder="Поиск товаров..."
+                oninput="searchItems()"
+            />
+            <button id="clear-search" onclick="clearSearch()">✖</button>
+        </div>
+    </div>
+
+    <div id="content">
+        <h2>Добро пожаловать</h2>
+        <p>Выберите категорию, чтобы начать добавлять товары в заказ. </p>
+        </div>
+
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    <div class="side-menu" id="sideMenu">
+        <div class="side-menu-header">Быстрое меню</div>
+        <div class="side-menu-item" onclick="showSupplierList()"><i class="fas fa-truck"></i>Поставщики</div>
+        <div class="side-menu-item" onclick="showPricList()"><i class="fas fa-file-invoice"></i>Прайсы</div>
+    </div>
+
+</body>
+
+</html>
