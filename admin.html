@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ панель - Управление заказами</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <header>
+        <h1><i class="fas fa-cog"></i> Панель администратора</h1>
+        <a href="index.html" class="back-button"><i class="fas fa-arrow-left"></i> Вернуться на главную</a>
+    </header>
+
+    <div class="admin-container">
+        <div class="admin-sidebar">
+            <button class="admin-nav-button active" onclick="showSection('products')">
+                <i class="fas fa-wine-bottle"></i> Товары
+            </button>
+            <button class="admin-nav-button" onclick="showSection('suppliers')">
+                <i class="fas fa-truck"></i> Поставщики
+            </button>
+            <button class="admin-nav-button" onclick="showSection('prices')">
+                <i class="fas fa-file-invoice-dollar"></i> Прайс-листы
+            </button>
+        </div>
+
+        <div class="admin-content">
+            <div id="products-section" class="admin-section active">
+                <h2>Управление товарами</h2>
+                <div class="admin-actions">
+                    <button onclick="showAddProductModal()">
+                        Добавить товар   
+                    </button>
+                    <select id="category-filter">
+                        <option value="">Все категории</option>
+                    </select>
+                </div>
+                <div id="products-list"></div>
+            </div>
+
+            <div id="suppliers-section" class="admin-section">
+                <h2>Управление поставщиками</h2>
+                <div class="admin-actions">
+                    <button onclick="showAddSupplierModal()">
+                        <i class="fas fa-plus"></i> Добавить поставщика
+                    </button>
+                </div>
+                <div id="suppliers-list"></div>
+            </div>
+
+            <div id="prices-section" class="admin-section">
+                <h2>Управление прайс-листами</h2>
+                <div class="admin-actions">
+                    <div class="upload-area">
+                        <input type="file" id="price-list-upload" accept=".pdf" multiple>
+                        <label for="price-list-upload">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            Загрузить прайс-лист
+                        </label>
+                    </div>
+                </div>
+                <div id="price-lists"></div>
+            </div>
+
+            <div class="admin-section" id="qr-section">
+                <h2>Мобильный доступ</h2>
+                <div class="qr-container">
+                    <div id="qrcode"></div>
+                    <p>Отсканируйте QR-код для доступа с телефона</p>
+                    <p class="mobile-url" id="mobileUrl"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальные окна -->
+    <div id="add-product-modal" class="modal">
+        <div class="modal-content">            <h3>Добавить товар</h3>
+            <form id="add-product-form" class="admin-form">
+                <div class="form-group">
+                    <label for="product-name">Название товара</label>
+                    <input type="text" id="product-name" name="name" placeholder="Введите название товара" required>
+                </div>                <div class="form-group">
+                    <label for="product-category">Категория</label>
+                    <div class="input-with-add">
+                        <select id="product-category" name="category" required>
+                            <option value="">Выберите категорию</option>
+                        </select>
+                        <button type="button" onclick="showNewCategoryInput()" class="btn-add">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div id="new-category-input" style="display: none;" class="mt-2">
+                        <input type="text" id="new-category-name" placeholder="Введите название новой категории">
+                        <button type="button" onclick="addNewCategory()" class="btn-primary">Добавить</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="product-supplier">Поставщик</label>
+                    <div class="input-with-add">
+                        <select id="product-supplier" name="supplier" required>
+                            <option value="">Выберите поставщика</option>
+                        </select>
+                        <button type="button" onclick="showAddSupplierModal()" class="btn-add">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-save"></i> Сохранить
+                    </button>
+                    <button type="button" class="btn-secondary" onclick="closeModal('add-product-modal')">
+                        <i class="fas fa-times"></i> Отмена
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="add-supplier-modal" class="modal">
+        <div class="modal-content">            <h3>Добавить поставщика</h3>
+            <form id="add-supplier-form" class="admin-form">
+                <div class="form-group">
+                    <label for="supplier-name">Название поставщика</label>
+                    <input type="text" id="supplier-name" name="name" placeholder="Введите название поставщика" required>
+                </div>
+                <div class="form-group">
+                    <label for="supplier-phone">Телефон</label>
+                    <input type="tel" id="supplier-phone" name="phone" placeholder="Введите номер телефона" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-save"></i> Сохранить
+                    </button>
+                    <button type="button" class="btn-secondary" onclick="closeModal('add-supplier-modal')">
+                        <i class="fas fa-times"></i> Отмена
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="scripts/admin.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</body>
+</html>
