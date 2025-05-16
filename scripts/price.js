@@ -34,6 +34,11 @@ function showPricList() {
                     <i class="fas fa-file-pdf" style="color: #dc3545; margin-right: 10px;"></i>
                     <span style="flex: 1;">Крафт</span>
                 </div>
+
+                <div class="price-item" onclick="window.open('price-lists/Barbados.pdf', '_blank')" style="cursor: pointer; margin-top: 15px; display: flex; align-items: center;">
+                    <i class="fas fa-file-pdf" style="color: #dc3545; margin-right: 10px;"></i>
+                    <span style="flex: 1;">Barbados</span>
+                </div>
             </div>
         </div>
     `;
